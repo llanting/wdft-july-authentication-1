@@ -15,13 +15,9 @@ const mongoose = require('mongoose');
 // Set up the database
 require('./configs/db.config');
 
-// Routers
-const indexRouter = require('./routes/index.routes');
-
 const app = express();
 
 // Express View engine setup
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
@@ -37,9 +33,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // helps us use the cookies from each request
-app.use(cookieParser());
+//app.use(cookieParser());
 
 // Routes middleware
+const indexRouter = require('./routes/index.routes');
 app.use('/', indexRouter);
 
 module.exports = app;
