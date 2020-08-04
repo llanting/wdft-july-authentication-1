@@ -33,10 +33,28 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // helps us use the cookies from each request
-//app.use(cookieParser());
+app.use(cookieParser());
+
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+ 
+app.use(session({
+  secret: 'my-pet-cat',
+  cookie: {
+    maxAge: 60*60*24*1000 // 1day // in milliseconds 
+  },
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 60*60*24 // 1 day // value in seconds
+  })
+}));
+
 
 // Routes middleware
 const indexRouter = require('./routes/index.routes');
 app.use('/', indexRouter);
+
+const authRouter = require('./routes/auth.routes');
+app.use('/', authRouter);
 
 module.exports = app;
