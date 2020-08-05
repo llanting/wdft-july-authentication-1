@@ -45,7 +45,7 @@ app.use(session({
   },
   store: new MongoStore({
     mongooseConnection: mongoose.connection,
-    ttl: 60*60*24 // 1 day // value in seconds
+    ttl: 60*60*8 // 1 day // value in seconds
   })
 }));
 
